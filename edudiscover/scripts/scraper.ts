@@ -53,17 +53,18 @@ async function scrapeSource(name: string, source: DataSource) {
     try {
         // Fetch data
         const response = await axios.get(source.url, {
-            timeout: 30000,
+            timeout: 60000,
             headers: {
                 'User-Agent': 'EduDiscover/1.0 (Educational Platform)',
-                'Accept': 'application/json'
-            }
+                'Accept': source.format === 'csv' ? 'text/csv' : 'application/json'
+            },
+            responseType: source.format === 'csv' ? 'text' : 'json'
         });
 
         console.log(`   Status: ${response.status}`);
 
         // Extract records from response
-        const records = extractRecords(response.data, source.format);
+        const records = await extractRecords(response.data, source.format);
         console.log(`   Found ${records.length} records`);
 
         // Normalize data
@@ -126,7 +127,21 @@ async function scrapeSource(name: string, source: DataSource) {
 /**
  * Extract records from API response based on format
  */
-function extractRecords(data: any, format: string): any[] {
+async function extractRecords(data: any, format: string): Promise<any[]> {
+    if (format === 'csv') {
+        // Parse CSV data
+        const { parse } = await import('csv-parse/sync');
+        const records = parse(data, {
+            columns: true,
+            skip_empty_lines: true,
+            trim: true,
+            delimiter: ';',
+            relax_quotes: true,
+            relax_column_count: true
+        });
+        return records;
+    }
+
     if (format === 'json') {
         // Handle different JSON structures
         if (Array.isArray(data)) {
