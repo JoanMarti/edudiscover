@@ -1,18 +1,42 @@
 'use client';
 
-import { Search, MapPin } from 'lucide-react';
+import { Search, MapPin, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { cities } from '@/lib/data/cities';
 
 export default function HeroSearch() {
-    const [searchQuery, setSearchQuery] = useState('');
+    const [schoolQuery, setSchoolQuery] = useState('');
+    const [selectedCity, setSelectedCity] = useState('');
     const router = useRouter();
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
-        if (searchQuery.trim()) {
-            router.push(`/buscar?q=${encodeURIComponent(searchQuery)}`);
+
+        const params = new URLSearchParams();
+
+        if (schoolQuery.trim()) {
+            params.set('q', schoolQuery.trim());
         }
+
+        if (selectedCity) {
+            params.set('city', selectedCity);
+        }
+
+        router.push(`/buscar?${params.toString()}`);
+    };
+
+    const handleQuickFilter = (filterType: string, filterValue: string | string[]) => {
+        const params = new URLSearchParams();
+
+        if (filterType === 'stages') {
+            const stages = Array.isArray(filterValue) ? filterValue : [filterValue];
+            params.set('stages', stages.join(','));
+        } else if (filterType === 'types') {
+            params.set('types', filterValue as string);
+        }
+
+        router.push(`/buscar?${params.toString()}`);
     };
 
     return (
@@ -30,37 +54,75 @@ export default function HeroSearch() {
                         Descubre, compara y contacta con los mejores colegios de España
                     </p>
 
-                    {/* Search Bar */}
+                    {/* Simplified Search Bar */}
                     <form onSubmit={handleSearch} className="mb-8">
-                        <div className="flex flex-col md:flex-row gap-3 max-w-3xl mx-auto">
-                            <div className="flex-1 relative">
-                                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                                <input
-                                    type="text"
-                                    placeholder="Nombre del colegio o localización"
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full pl-12 pr-4 py-4 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-300"
-                                />
+                        <div className="bg-white rounded-xl shadow-2xl p-2 max-w-4xl mx-auto">
+                            <div className="flex flex-col md:flex-row gap-2">
+                                {/* School Name Input */}
+                                <div className="flex-1 relative">
+                                    <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                                    <input
+                                        type="text"
+                                        placeholder="Nombre del colegio..."
+                                        value={schoolQuery}
+                                        onChange={(e) => setSchoolQuery(e.target.value)}
+                                        className="w-full pl-12 pr-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-300 bg-gray-50"
+                                    />
+                                </div>
+
+                                {/* Location Selector */}
+                                <div className="flex-1 relative">
+                                    <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                                    <select
+                                        value={selectedCity}
+                                        onChange={(e) => setSelectedCity(e.target.value)}
+                                        className="w-full pl-12 pr-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-300 bg-gray-50 appearance-none cursor-pointer"
+                                    >
+                                        <option value="">Todas las ciudades</option>
+                                        {cities.map(city => (
+                                            <option key={city.slug} value={city.name}>
+                                                {city.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
+                                </div>
+
+                                {/* Search Button */}
+                                <button
+                                    type="submit"
+                                    className="btn-primary bg-accent-500 hover:bg-accent-600 focus:ring-accent-400 px-8 py-3 whitespace-nowrap"
+                                >
+                                    Buscar
+                                </button>
                             </div>
-                            <button type="submit" className="btn-primary bg-accent-500 hover:bg-accent-600 focus:ring-accent-400 px-8 py-4 whitespace-nowrap">
-                                Buscar
-                            </button>
                         </div>
                     </form>
 
                     {/* Quick Filters */}
                     <div className="flex flex-wrap justify-center gap-3 mb-8">
-                        <button className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full text-sm font-medium transition-colors backdrop-blur-sm">
+                        <button
+                            onClick={() => handleQuickFilter('stages', 'guarderia')}
+                            className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full text-sm font-medium transition-colors backdrop-blur-sm"
+                        >
                             Guarderías
                         </button>
-                        <button className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full text-sm font-medium transition-colors backdrop-blur-sm">
+                        <button
+                            onClick={() => handleQuickFilter('stages', 'primaria')}
+                            className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full text-sm font-medium transition-colors backdrop-blur-sm"
+                        >
                             Colegios
                         </button>
-                        <button className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full text-sm font-medium transition-colors backdrop-blur-sm">
+                        <button
+                            onClick={() => handleQuickFilter('stages', ['secundaria', 'bachillerato'])}
+                            className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full text-sm font-medium transition-colors backdrop-blur-sm"
+                        >
                             Institutos
                         </button>
-                        <button className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full text-sm font-medium transition-colors backdrop-blur-sm">
+                        <button
+                            onClick={() => handleQuickFilter('types', 'internacional')}
+                            className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-full text-sm font-medium transition-colors backdrop-blur-sm"
+                        >
                             Internacionales
                         </button>
                     </div>

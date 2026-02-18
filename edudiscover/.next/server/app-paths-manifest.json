@@ -1,6 +1,0 @@
-{
-  "/(marketing)/buscar/page": "app/(marketing)/buscar/page.js",
-  "/[slug]/page": "app/[slug]/page.js",
-  "/(marketing)/comparar/page": "app/(marketing)/comparar/page.js",
-  "/page": "app/page.js"
-}

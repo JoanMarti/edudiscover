@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { Facebook, Instagram, Twitter, Linkedin } from 'lucide-react';
 
@@ -68,6 +70,17 @@ export default function Footer() {
                             <li><Link href="/contacto" className="hover:text-primary-400 transition-colors">Contacto</Link></li>
                             <li><Link href="/privacidad" className="hover:text-primary-400 transition-colors">Privacidad</Link></li>
                             <li><Link href="/terminos" className="hover:text-primary-400 transition-colors">Términos</Link></li>
+                            <li>
+                                <button
+                                    onClick={() => {
+                                        localStorage.removeItem('edudiscover_cookie_consent');
+                                        window.location.reload();
+                                    }}
+                                    className="hover:text-primary-400 transition-colors text-left"
+                                >
+                                    Preferencias de cookies
+                                </button>
+                            </li>
                         </ul>
                     </div>
                 </div>

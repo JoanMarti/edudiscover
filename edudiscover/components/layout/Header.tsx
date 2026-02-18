@@ -1,11 +1,36 @@
 'use client';
 
 import Link from 'next/link';
-import { Search, Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { Search, Menu, X, User, Heart, LogOut, Settings } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { useAuth } from '@/lib/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
+import LanguageSelector from './LanguageSelector';
 
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [userMenuOpen, setUserMenuOpen] = useState(false);
+    const { user, isAuthenticated, logout } = useAuth();
+    const router = useRouter();
+    const userMenuRef = useRef<HTMLDivElement>(null);
+
+    // Close user menu when clicking outside
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+                setUserMenuOpen(false);
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const handleLogout = () => {
+        logout();
+        setUserMenuOpen(false);
+        router.push('/');
+    };
 
     return (
         <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
@@ -39,12 +64,66 @@ export default function Header() {
 
                     {/* Desktop Actions */}
                     <div className="hidden md:flex items-center space-x-4">
-                        <button className="text-gray-700 hover:text-primary-600 transition-colors">
-                            Iniciar sesión
-                        </button>
-                        <button className="btn-primary text-sm">
-                            Registrarse
-                        </button>
+                        <LanguageSelector />
+                        {isAuthenticated && user ? (
+                            <div className="relative" ref={userMenuRef}>
+                                <button
+                                    onClick={() => setUserMenuOpen(!userMenuOpen)}
+                                    className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                >
+                                    <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                                        <User size={18} className="text-primary-600" />
+                                    </div>
+                                    <span className="text-sm font-medium text-gray-700">
+                                        {user.profile.firstName}
+                                    </span>
+                                </button>
+
+                                {/* User Dropdown */}
+                                {userMenuOpen && (
+                                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2">
+                                        <div className="px-4 py-2 border-b border-gray-100">
+                                            <p className="text-sm font-medium text-gray-900">
+                                                {user.profile.firstName} {user.profile.lastName}
+                                            </p>
+                                            <p className="text-xs text-gray-500">{user.email}</p>
+                                        </div>
+                                        <Link
+                                            href="/perfil"
+                                            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                                            onClick={() => setUserMenuOpen(false)}
+                                        >
+                                            <Settings size={16} />
+                                            Mi perfil
+                                        </Link>
+                                        <Link
+                                            href="/perfil#guardados"
+                                            className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                                            onClick={() => setUserMenuOpen(false)}
+                                        >
+                                            <Heart size={16} />
+                                            Guardados ({user.savedSchools.length})
+                                        </Link>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="flex items-center gap-2 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                                        >
+                                            <LogOut size={16} />
+                                            Cerrar sesión
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <>
+                                <Link href="/iniciar-sesion" className="text-gray-700 hover:text-primary-600 transition-colors">
+                                    Iniciar sesión
+                                </Link>
+                                <Link href="/registrarse" className="btn-primary text-sm">
+                                    Registrarse
+                                </Link>
+                            </>
+                        )}
                     </div>
 
                     {/* Mobile Menu Button */}
@@ -89,12 +168,43 @@ export default function Header() {
                                 Guías
                             </Link>
                             <div className="pt-4 border-t border-gray-200 space-y-2">
-                                <button className="w-full text-left text-gray-700 hover:text-primary-600 transition-colors">
-                                    Iniciar sesión
-                                </button>
-                                <button className="btn-primary w-full text-sm">
-                                    Registrarse
-                                </button>
+                                {isAuthenticated && user ? (
+                                    <>
+                                        <Link
+                                            href="/perfil"
+                                            className="block text-gray-700 hover:text-primary-600 transition-colors"
+                                            onClick={() => setMobileMenuOpen(false)}
+                                        >
+                                            Mi perfil
+                                        </Link>
+                                        <button
+                                            onClick={() => {
+                                                handleLogout();
+                                                setMobileMenuOpen(false);
+                                            }}
+                                            className="w-full text-left text-red-600 hover:text-red-700 transition-colors"
+                                        >
+                                            Cerrar sesión
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link
+                                            href="/iniciar-sesion"
+                                            className="block text-gray-700 hover:text-primary-600 transition-colors"
+                                            onClick={() => setMobileMenuOpen(false)}
+                                        >
+                                            Iniciar sesión
+                                        </Link>
+                                        <Link
+                                            href="/registrarse"
+                                            className="btn-primary w-full text-sm text-center"
+                                            onClick={() => setMobileMenuOpen(false)}
+                                        >
+                                            Registrarse
+                                        </Link>
+                                    </>
+                                )}
                             </div>
                         </nav>
                     </div>

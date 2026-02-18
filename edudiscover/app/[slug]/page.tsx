@@ -1,10 +1,34 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Star, MapPin, Phone, Mail, Globe, Heart, GitCompare } from 'lucide-react';
+import { Star, MapPin, Phone, Mail, Globe } from 'lucide-react';
 import { getSchoolBySlug, SCHOOL_TYPES, STAGE_LABELS } from '@/lib/data/schools';
 import { getReviewsBySchoolId } from '@/lib/data/reviews';
 import { formatRating, formatPrice } from '@/lib/utils';
+import EducationalStagesTimeline from '@/components/schools/EducationalStagesTimeline';
+import { getSchoolRanking } from '@/lib/data/rankings';
+import { SchoolRankingCard } from '@/components/schools/SchoolRankingCard';
+import SchoolActions from '@/components/school/SchoolActions';
+import type { Metadata } from 'next';
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+    const school = getSchoolBySlug(params.slug);
+    if (!school) {
+        return { title: 'Colegio no encontrado | EduDiscover' };
+    }
+    const type = SCHOOL_TYPES[school.type] ?? school.type;
+    const rating = formatRating(school.rating);
+    return {
+        title: `${school.name} — ${school.city} | EduDiscover`,
+        description: `${school.name} es un colegio ${type.toLowerCase()} en ${school.city}. Valoración ${rating}/5 basada en ${school.reviewCount} opiniones. Consulta precios, instalaciones, metodología y más.`,
+        keywords: `${school.name}, colegio ${school.city}, ${type} ${school.city}, opiniones ${school.name}`,
+        openGraph: {
+            title: `${school.name} | EduDiscover`,
+            description: `Colegio ${type.toLowerCase()} en ${school.city}. Valoración ${rating}/5.`,
+            type: 'website',
+        },
+    };
+}
 
 export default function SchoolProfilePage({ params }: { params: { slug: string } }) {
     const school = getSchoolBySlug(params.slug);
@@ -46,14 +70,7 @@ export default function SchoolProfilePage({ params }: { params: { slug: string }
                                 </span>
                             </div>
                         </div>
-                        <div className="flex gap-2">
-                            <button className="btn-secondary p-3">
-                                <Heart size={20} />
-                            </button>
-                            <button className="btn-secondary p-3">
-                                <GitCompare size={20} />
-                            </button>
-                        </div>
+                        <SchoolActions schoolId={school.id} schoolSlug={school.slug} />
                     </div>
                 </div>
             </div>
@@ -127,6 +144,17 @@ export default function SchoolProfilePage({ params }: { params: { slug: string }
                             </div>
                         </div>
 
+                        {/* Ranking Section */}
+                        {(() => {
+                            const ranking = getSchoolRanking(school.slug);
+                            return ranking ? (
+                                <div className="card p-6">
+                                    <h2 className="text-2xl font-bold mb-6">Rankings y Valoraciones</h2>
+                                    <SchoolRankingCard ranking={ranking} variant="detailed" />
+                                </div>
+                            ) : null;
+                        })()}
+
                         {/* Educational Project */}
                         <div className="card p-6">
                             <h2 className="text-2xl font-bold mb-4">Proyecto educativo</h2>
@@ -141,15 +169,8 @@ export default function SchoolProfilePage({ params }: { params: { slug: string }
 
                         {/* Educational Stages */}
                         <div className="card p-6">
-                            <h2 className="text-2xl font-bold mb-4">Etapas educativas</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                {school.stages.map((stage) => (
-                                    <div key={stage} className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
-                                        <span className="text-green-600">✓</span>
-                                        <span>{STAGE_LABELS[stage]}</span>
-                                    </div>
-                                ))}
-                            </div>
+                            <h2 className="text-2xl font-bold mb-6">Etapas educativas</h2>
+                            <EducationalStagesTimeline stages={school.stages} />
                         </div>
 
                         {/* Services */}

@@ -8,9 +8,12 @@ import { Search, SlidersHorizontal, MapPin, Star, Heart, GitCompare, X, ChevronD
 import { schools, SCHOOL_TYPES, STAGE_LABELS } from '@/lib/data/schools';
 import { cities } from '@/lib/data/cities';
 import { formatRating, formatPrice } from '@/lib/utils';
+import { getSchoolRanking } from '@/lib/data/rankings';
+import { SchoolRankingCard } from '@/components/schools/SchoolRankingCard';
+
 
 type ViewMode = 'list' | 'grid';
-type SortOption = 'relevance' | 'rating' | 'price-asc' | 'price-desc' | 'name';
+type SortOption = 'relevance' | 'rating' | 'price-asc' | 'price-desc' | 'name' | 'ranking';
 
 export default function SearchPage() {
     const searchParams = useSearchParams();
@@ -77,6 +80,15 @@ export default function SearchPage() {
         switch (sortBy) {
             case 'rating':
                 results.sort((a, b) => b.rating - a.rating);
+                break;
+            case 'ranking':
+                results.sort((a, b) => {
+                    const rankingA = getSchoolRanking(a.slug);
+                    const rankingB = getSchoolRanking(b.slug);
+                    const scoreA = rankingA?.overallScore || 0;
+                    const scoreB = rankingB?.overallScore || 0;
+                    return scoreB - scoreA;
+                });
                 break;
             case 'price-asc':
                 results.sort((a, b) => (a.priceMonthly || 0) - (b.priceMonthly || 0));
@@ -170,6 +182,7 @@ export default function SearchPage() {
                             className="input px-4 py-3 min-w-[200px]"
                         >
                             <option value="relevance">Más relevantes</option>
+                            <option value="ranking">Mejor ranking</option>
                             <option value="rating">Mejor valorados</option>
                             <option value="price-asc">Precio: menor a mayor</option>
                             <option value="price-desc">Precio: mayor a menor</option>
@@ -351,65 +364,77 @@ export default function SearchPage() {
                                 </button>
                             </div>
                         ) : (
-                            <div className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 gap-6' : 'space-y-4'}>
+                            <div className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 gap-4' : 'space-y-3'}>
                                 {filteredSchools.map(school => (
-                                    <div key={school.id} className="card p-6 hover:shadow-card-hover transition-shadow">
-                                        <div className="flex gap-4">
+                                    <div key={school.id} className="card p-4 hover:shadow-card-hover transition-shadow">
+                                        <div className="flex gap-3">
                                             {/* Image */}
-                                            <div className="relative w-32 h-32 flex-shrink-0 rounded-lg overflow-hidden">
+                                            <Link href={`/${school.slug}`} className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden">
                                                 <Image
                                                     src={school.images[0]}
                                                     alt={school.name}
                                                     fill
                                                     className="object-cover"
                                                 />
-                                            </div>
+                                            </Link>
 
                                             {/* Content */}
                                             <div className="flex-1 min-w-0">
-                                                <div className="flex items-start justify-between mb-2">
-                                                    <div className="flex-1">
-                                                        <Link href={`/${school.slug}`} className="hover:text-primary-600">
-                                                            <h3 className="font-semibold text-lg mb-1">{school.name}</h3>
-                                                        </Link>
-                                                        <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-                                                            <MapPin size={14} />
-                                                            <span>{school.neighborhood}, {school.city}</span>
+                                                <div className="flex items-start justify-between gap-2 mb-1">
+                                                    <Link href={`/${school.slug}`} className="hover:text-primary-600 flex-1 min-w-0">
+                                                        <h3 className="font-semibold text-base mb-0.5 truncate">{school.name}</h3>
+                                                        <div className="flex items-center gap-1.5 text-xs text-gray-600">
+                                                            <MapPin size={12} />
+                                                            <span className="truncate">{school.neighborhood}, {school.city}</span>
                                                         </div>
-                                                    </div>
-                                                    <div className="flex gap-2">
-                                                        <button className="p-2 hover:bg-gray-100 rounded-lg">
-                                                            <Heart size={20} className="text-gray-400" />
+                                                    </Link>
+                                                    <div className="flex gap-1 flex-shrink-0">
+                                                        <button className="p-1.5 hover:bg-gray-100 rounded-lg">
+                                                            <Heart size={16} className="text-gray-400" />
                                                         </button>
-                                                        <button className="p-2 hover:bg-gray-100 rounded-lg">
-                                                            <GitCompare size={20} className="text-gray-400" />
+                                                        <button className="p-1.5 hover:bg-gray-100 rounded-lg">
+                                                            <GitCompare size={16} className="text-gray-400" />
                                                         </button>
                                                     </div>
                                                 </div>
 
-                                                <div className="flex items-center gap-2 mb-3">
+                                                <div className="flex items-center gap-2 mb-2 flex-wrap">
                                                     <div className="flex items-center gap-1">
-                                                        <Star className="fill-yellow-400 text-yellow-400" size={16} />
-                                                        <span className="font-semibold">{formatRating(school.rating)}</span>
+                                                        <Star className="fill-yellow-400 text-yellow-400" size={14} />
+                                                        <span className="font-semibold text-sm">{formatRating(school.rating)}</span>
+                                                        <span className="text-xs text-gray-500">({school.reviewCount})</span>
                                                     </div>
-                                                    <span className="text-sm text-gray-600">({school.reviewCount} opiniones)</span>
-                                                    <span className="px-2 py-1 bg-primary-100 text-primary-700 text-xs font-medium rounded">
+                                                    <span className="px-2 py-0.5 bg-primary-100 text-primary-700 text-xs font-medium rounded">
                                                         {SCHOOL_TYPES[school.type]}
+                                                    </span>
+                                                    <span className="text-xs text-gray-600">
+                                                        {school.stages.slice(0, 2).map(stage => STAGE_LABELS[stage]).join(' · ')}
                                                     </span>
                                                 </div>
 
-                                                <div className="flex items-center justify-between">
-                                                    <div className="text-sm text-gray-600">
-                                                        {school.stages.slice(0, 2).map(stage => STAGE_LABELS[stage]).join(' · ')}
-                                                    </div>
-                                                    <div className="font-semibold text-lg text-primary-600">
+                                                <div className="flex items-center justify-between gap-2">
+                                                    <div className="font-semibold text-sm text-primary-600">
                                                         {school.priceMonthly ? formatPrice(school.priceMonthly) : 'Gratuito'}
                                                     </div>
-                                                </div>
 
-                                                <Link href={`/${school.slug}`} className="btn-primary mt-4 w-full text-center">
-                                                    Ver perfil
-                                                </Link>
+                                                    {/* Ranking Display - Compact */}
+                                                    {(() => {
+                                                        const ranking = getSchoolRanking(school.slug);
+                                                        return ranking ? (
+                                                            <div className="flex items-center gap-1.5">
+                                                                <div className="flex items-center gap-1 px-2 py-0.5 bg-green-50 border border-green-200 rounded text-xs">
+                                                                    <span className="font-bold text-green-700">{ranking.overallScore.toFixed(0)}</span>
+                                                                    <span className="text-green-600">/100</span>
+                                                                </div>
+                                                                {ranking.badges.slice(0, 1).map(badge => (
+                                                                    <span key={badge.id} className="text-xs" title={badge.description}>
+                                                                        {badge.icon}
+                                                                    </span>
+                                                                ))}
+                                                            </div>
+                                                        ) : null;
+                                                    })()}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
