@@ -3,6 +3,7 @@ export interface School {
     id: string;
     slug: string;
     name: string;
+    country: string; // ISO code (ES, UK, etc.)
     type: 'publico' | 'concertado' | 'privado' | 'internacional';
     ideario: 'religioso' | 'laico';
     gender: 'mixto' | 'ninas' | 'ninos';
@@ -114,6 +115,7 @@ export const schools: School[] = [
         id: '2',
         slug: 'colegio-montessori-barcelona',
         name: 'Colegio Montessori Barcelona',
+        country: 'ES',
         type: 'privado',
         ideario: 'laico',
         gender: 'mixto',
@@ -151,6 +153,7 @@ export const schools: School[] = [
         id: '3',
         slug: 'colegio-publico-cervantes-madrid',
         name: 'CEIP Cervantes',
+        country: 'ES',
         type: 'publico',
         ideario: 'laico',
         gender: 'mixto',
@@ -186,6 +189,7 @@ export const schools: School[] = [
         id: '4',
         slug: 'colegio-britanico-valencia',
         name: 'British School Valencia',
+        country: 'ES',
         type: 'internacional',
         ideario: 'laico',
         gender: 'mixto',
@@ -222,6 +226,7 @@ export const schools: School[] = [
         id: '5',
         slug: 'colegio-waldorf-sevilla',
         name: 'Escuela Waldorf Sevilla',
+        country: 'ES',
         type: 'privado',
         ideario: 'laico',
         gender: 'mixto',

@@ -3,9 +3,11 @@
 import { Search, MapPin, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { cities } from '@/lib/data/cities';
 
 export default function HeroSearch() {
+    const t = useTranslations('Home');
     const [schoolQuery, setSchoolQuery] = useState('');
     const [selectedCity, setSelectedCity] = useState('');
     const router = useRouter();
@@ -47,11 +49,11 @@ export default function HeroSearch() {
                 <div className="max-w-4xl mx-auto text-center">
                     {/* Headline */}
                     <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                        Encuentra el colegio perfecto para tu hijo
+                        {t('heroTitle')}
                     </h1>
 
                     <p className="text-xl md:text-2xl mb-8 text-primary-100">
-                        Descubre, compara y contacta con los mejores colegios de España
+                        {t('heroSubtitle')}
                     </p>
 
                     {/* Simplified Search Bar */}
@@ -63,7 +65,7 @@ export default function HeroSearch() {
                                     <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                                     <input
                                         type="text"
-                                        placeholder="Nombre del colegio..."
+                                        placeholder={t('searchPlaceholder')}
                                         value={schoolQuery}
                                         onChange={(e) => setSchoolQuery(e.target.value)}
                                         className="w-full pl-12 pr-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-300 bg-gray-50"
@@ -93,7 +95,7 @@ export default function HeroSearch() {
                                     type="submit"
                                     className="btn-primary bg-accent-500 hover:bg-accent-600 focus:ring-accent-400 px-8 py-3 whitespace-nowrap"
                                 >
-                                    Buscar
+                                    {t('searchButton')}
                                 </button>
                             </div>
                         </div>

@@ -5,9 +5,11 @@ import { Search, Menu, X, User, Heart, LogOut, Settings } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '@/lib/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import LanguageSelector from './LanguageSelector';
 
 export default function Header() {
+    const t = useTranslations('Navigation');
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
     const { user, isAuthenticated, logout } = useAuth();
@@ -49,16 +51,16 @@ export default function Header() {
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex items-center space-x-8">
                         <Link href="/buscar" className="text-gray-700 hover:text-primary-600 transition-colors">
-                            Buscar colegios
+                            {t('search')}
                         </Link>
                         <Link href="/descubrir" className="text-gray-700 hover:text-primary-600 transition-colors">
-                            Descubrir
+                            {t('discover')}
                         </Link>
                         <Link href="/comparar" className="text-gray-700 hover:text-primary-600 transition-colors">
-                            Comparar
+                            {t('compare')}
                         </Link>
                         <Link href="/guias" className="text-gray-700 hover:text-primary-600 transition-colors">
-                            Guías
+                            {t('guides')}
                         </Link>
                     </nav>
 
@@ -94,7 +96,7 @@ export default function Header() {
                                             onClick={() => setUserMenuOpen(false)}
                                         >
                                             <Settings size={16} />
-                                            Mi perfil
+                                            {t('profile')}
                                         </Link>
                                         <Link
                                             href="/perfil#guardados"
@@ -109,7 +111,7 @@ export default function Header() {
                                             className="flex items-center gap-2 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50"
                                         >
                                             <LogOut size={16} />
-                                            Cerrar sesión
+                                            {t('logout')}
                                         </button>
                                     </div>
                                 )}
@@ -117,10 +119,10 @@ export default function Header() {
                         ) : (
                             <>
                                 <Link href="/iniciar-sesion" className="text-gray-700 hover:text-primary-600 transition-colors">
-                                    Iniciar sesión
+                                    {t('login')}
                                 </Link>
                                 <Link href="/registrarse" className="btn-primary text-sm">
-                                    Registrarse
+                                    {t('register')}
                                 </Link>
                             </>
                         )}
@@ -144,28 +146,28 @@ export default function Header() {
                                 className="text-gray-700 hover:text-primary-600 transition-colors"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
-                                Buscar colegios
+                                {t('search')}
                             </Link>
                             <Link
                                 href="/descubrir"
                                 className="text-gray-700 hover:text-primary-600 transition-colors"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
-                                Descubrir
+                                {t('discover')}
                             </Link>
                             <Link
                                 href="/comparar"
                                 className="text-gray-700 hover:text-primary-600 transition-colors"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
-                                Comparar
+                                {t('compare')}
                             </Link>
                             <Link
                                 href="/guias"
                                 className="text-gray-700 hover:text-primary-600 transition-colors"
                                 onClick={() => setMobileMenuOpen(false)}
                             >
-                                Guías
+                                {t('guides')}
                             </Link>
                             <div className="pt-4 border-t border-gray-200 space-y-2">
                                 {isAuthenticated && user ? (
@@ -175,7 +177,7 @@ export default function Header() {
                                             className="block text-gray-700 hover:text-primary-600 transition-colors"
                                             onClick={() => setMobileMenuOpen(false)}
                                         >
-                                            Mi perfil
+                                            {t('profile')}
                                         </Link>
                                         <button
                                             onClick={() => {
@@ -184,7 +186,7 @@ export default function Header() {
                                             }}
                                             className="w-full text-left text-red-600 hover:text-red-700 transition-colors"
                                         >
-                                            Cerrar sesión
+                                            {t('logout')}
                                         </button>
                                     </>
                                 ) : (
@@ -194,14 +196,14 @@ export default function Header() {
                                             className="block text-gray-700 hover:text-primary-600 transition-colors"
                                             onClick={() => setMobileMenuOpen(false)}
                                         >
-                                            Iniciar sesión
+                                            {t('login')}
                                         </Link>
                                         <Link
                                             href="/registrarse"
                                             className="btn-primary w-full text-sm text-center"
                                             onClick={() => setMobileMenuOpen(false)}
                                         >
-                                            Registrarse
+                                            {t('register')}
                                         </Link>
                                     </>
                                 )}

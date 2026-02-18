@@ -1,0 +1,27 @@
+{
+    "Navigation": {
+        "search": "Cercar col·legis",
+        "discover": "Descobrir",
+        "compare": "Comparar",
+        "guides": "Guies",
+        "forSchools": "Per a col·legis",
+        "login": "Iniciar sessió",
+        "register": "Registrar-se",
+        "profile": "El meu perfil",
+        "admin": "Panell Admin",
+        "logout": "Tancar sessió"
+    },
+    "Home": {
+        "heroTitle": "Troba el col·legi perfecte per al teu fill",
+        "heroSubtitle": "La plataforma més completa per descobrir, comparar i contactar amb els millors col·legis d'Espanya.",
+        "searchPlaceholder": "Cerca per nom, ciutat o codi postal...",
+        "searchButton": "Cercar col·legis"
+    },
+    "Footer": {
+        "brandDescription": "Troba el col·legi perfecte per al teu fill. Més de 12.500 col·legis a Espanya.",
+        "schools": "Col·legis",
+        "resources": "Recursos",
+        "company": "Empresa",
+        "rights": "© 2026 EduDiscover. Tots els drets reservats."
+    }
+}

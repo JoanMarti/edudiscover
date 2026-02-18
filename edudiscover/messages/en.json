@@ -1,0 +1,27 @@
+{
+    "Navigation": {
+        "search": "Buscar colegios",
+        "discover": "Descubrir",
+        "compare": "Comparar",
+        "guides": "Guías",
+        "forSchools": "Para colegios",
+        "login": "Iniciar sesión",
+        "register": "Registrarse",
+        "profile": "Mi Perfil",
+        "admin": "Panel Admin",
+        "logout": "Cerrar sesión"
+    },
+    "Home": {
+        "heroTitle": "Encuentra el colegio perfecto para tu hijo",
+        "heroSubtitle": "La plataforma más completa para descubrir, comparar y contactar con los mejores colegios de España.",
+        "searchPlaceholder": "Busca por nombre, ciudad o código postal...",
+        "searchButton": "Buscar colegios"
+    },
+    "Footer": {
+        "brandDescription": "Encuentra el colegio perfecto para tu hijo. Más de 12,500 colegios en España.",
+        "schools": "Colegios",
+        "resources": "Recursos",
+        "company": "Empresa",
+        "rights": "© 2026 EduDiscover. Todos los derechos reservados."
+    }
+}
