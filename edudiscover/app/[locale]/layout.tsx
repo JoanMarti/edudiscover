@@ -6,6 +6,7 @@ import "../globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { AuthProvider } from "@/lib/contexts/AuthContext";
+import { CountryProvider } from "@/lib/contexts/CountryContext";
 import CookieConsent from "@/components/gdpr/CookieConsent";
 
 const inter = Inter({
@@ -19,6 +20,9 @@ export const metadata: Metadata = {
     keywords: "colegios, escuelas, educación, España, comparar colegios, opiniones colegios",
 };
 
+import { cookies } from 'next/headers';
+import { COUNTRIES } from '@/lib/data/countries';
+
 export default async function LocaleLayout({
     children,
     params: { locale }
@@ -28,17 +32,24 @@ export default async function LocaleLayout({
 }>) {
     const messages = await getMessages();
 
+    const cookieStore = cookies();
+    const countryCode = cookieStore.get('NEXT_LOCALE_COUNTRY')?.value || 'ES';
+    const initialCountry = COUNTRIES.find(c => c.code === countryCode) || COUNTRIES[0];
+
     return (
+
         <html lang={locale}>
             <body className={`${inter.variable} font-sans`}>
                 <NextIntlClientProvider messages={messages}>
                     <AuthProvider>
-                        <Header />
-                        <main className="min-h-screen">
-                            {children}
-                        </main>
-                        <Footer />
-                        <CookieConsent />
+                        <CountryProvider initialCountry={initialCountry}>
+                            <Header />
+                            <main className="min-h-screen">
+                                {children}
+                            </main>
+                            <Footer />
+                            <CookieConsent />
+                        </CountryProvider>
                     </AuthProvider>
                 </NextIntlClientProvider>
             </body>

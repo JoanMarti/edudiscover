@@ -6,10 +6,18 @@ import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '@/lib/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { useCountry } from '@/lib/contexts/CountryContext';
+import dynamic from 'next/dynamic';
 import LanguageSelector from './LanguageSelector';
+
+const CountrySelector = dynamic(() => import('./CountrySelector'), {
+    ssr: false, // Client side only modal
+    loading: () => null
+});
 
 export default function Header() {
     const t = useTranslations('Navigation');
+    const { selectedCountry, setIsOpen: setIsCountryOpen } = useCountry();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
     const { user, isAuthenticated, logout } = useAuth();
@@ -66,6 +74,17 @@ export default function Header() {
 
                     {/* Desktop Actions */}
                     <div className="hidden md:flex items-center space-x-4">
+                        <CountrySelector />
+
+                        <button
+                            onClick={() => setIsCountryOpen(true)}
+                            className="flex items-center gap-2 px-3 py-2 rounded-full hover:bg-gray-100 transition-colors border border-transparent hover:border-gray-200"
+                            title="Seleccionar país"
+                        >
+                            <span className="text-xl">{selectedCountry.flag}</span>
+                            <span className="hidden lg:block text-sm font-medium text-gray-700">{selectedCountry.name}</span>
+                        </button>
+
                         <LanguageSelector />
                         {isAuthenticated && user ? (
                             <div className="relative" ref={userMenuRef}>

@@ -3,9 +3,13 @@ import Image from 'next/image';
 import { Star, MapPin, Heart, GitCompare } from 'lucide-react';
 import { getFeaturedSchools } from '@/lib/data/schools';
 import { formatRating } from '@/lib/utils';
+import { useTranslations } from 'next-intl';
 
 export default function FeaturedSchools() {
     const schools = getFeaturedSchools();
+    const t = useTranslations('Common');
+    const tTypes = useTranslations('SchoolTypes');
+    const tStages = useTranslations('Stages');
 
     return (
         <section className="py-16 bg-gray-50">
@@ -13,9 +17,9 @@ export default function FeaturedSchools() {
                 <div className="flex items-center justify-between mb-8">
                     <div>
                         <h2 className="text-3xl md:text-4xl font-bold mb-2">
-                            Colegios destacados
+                            {t('featuredSchools')}
                         </h2>
-                        <p className="text-gray-600">Colegios con excelentes valoraciones</p>
+                        <p className="text-gray-600">{t('featuredSchoolsSubtitle')}</p>
                     </div>
                 </div>
 
@@ -55,13 +59,14 @@ export default function FeaturedSchools() {
                                         <Star size={16} className="fill-yellow-400 text-yellow-400" />
                                         <span className="font-semibold">{formatRating(school.rating)}</span>
                                     </div>
-                                    <span className="text-sm text-gray-600">({school.reviewCount} opiniones)</span>
+                                    <span className="text-sm text-gray-600">({school.reviewCount} {t('reviews')})</span>
                                 </div>
 
                                 {/* Type & Price */}
                                 <div className="flex items-center gap-2 mb-3">
                                     <span className="px-2 py-1 bg-primary-100 text-primary-700 text-xs font-medium rounded">
-                                        {school.type.charAt(0).toUpperCase() + school.type.slice(1)}
+                                        {/* Use translation for type, fallback to capitalized raw value if missing */}
+                                        {tTypes.has(school.type) ? tTypes(school.type) : school.type.charAt(0).toUpperCase() + school.type.slice(1)}
                                     </span>
                                     <span className="text-sm font-semibold text-gray-700">{school.priceRange}</span>
                                 </div>
@@ -70,12 +75,12 @@ export default function FeaturedSchools() {
                                 <div className="flex flex-wrap gap-1 mb-4">
                                     {school.stages.slice(0, 2).map((stage) => (
                                         <span key={stage} className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded">
-                                            {stage}
+                                            {tStages.has(stage) ? tStages(stage) : stage.charAt(0).toUpperCase() + stage.slice(1)}
                                         </span>
                                     ))}
                                     {school.bilingual && (
                                         <span className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded">
-                                            Bilingüe
+                                            {t('bilingual')}
                                         </span>
                                     )}
                                 </div>
@@ -83,7 +88,7 @@ export default function FeaturedSchools() {
                                 {/* Actions */}
                                 <div className="flex gap-2">
                                     <Link href={`/${school.slug}`} className="btn-primary flex-1 text-sm py-2">
-                                        Ver perfil
+                                        {t('viewProfile')}
                                     </Link>
                                     <button className="btn-secondary p-2">
                                         <GitCompare size={18} />

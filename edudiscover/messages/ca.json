@@ -23,5 +23,62 @@
         "resources": "Recursos",
         "company": "Empresa",
         "rights": "© 2026 EduDiscover. Tots els drets reservats."
+    },
+    "SchoolTypes": {
+        "privado": "Privat",
+        "publico": "Públic",
+        "concertado": "Concertat",
+        "internacional": "Internacional"
+    },
+    "Stages": {
+        "infantil": "Infantil",
+        "primaria": "Primària",
+        "secundaria": "Secundària",
+        "bachillerato": "Batxillerat"
+    },
+    "Common": {
+        "bilingual": "Bilingüe",
+        "reviews": "opinions",
+        "viewProfile": "Veure perfil",
+        "featuredSchools": "Col·legis destacats",
+        "featuredSchoolsSubtitle": "Col·legis amb excel·lents valoracions",
+        "location": "Ubicació",
+        "school": "Col·legi",
+        "search": "Cercar",
+        "anyCity": "Qualsevol ciutat",
+        "bestRated": "Millors valorats",
+        "favorites": "Favorits"
+    },
+    "BrowseByType": {
+        "title": "Explora col·legis per tipus",
+        "publico": {
+            "name": "Col·legis Públics",
+            "description": "Educació gratuïta i de qualitat",
+            "count": "2.450 col·legis"
+        },
+        "concertado": {
+            "name": "Col·legis Concertats",
+            "description": "Gestió privada, finançament públic",
+            "count": "1.820 col·legis"
+        },
+        "privado": {
+            "name": "Col·legis Privats",
+            "description": "Autonomia pedagògica i metodològica",
+            "count": "1.180 col·legis"
+        },
+        "internacional": {
+            "name": "Col·legis Internacionals",
+            "description": "Currículum internacional i multilingüe",
+            "count": "385 col·legis"
+        }
+    },
+    "BrowseByMethodology": {
+        "title": "Troba col·legis per metodologia educativa",
+        "schoolsCount": "{count} col·legis"
+    },
+    "LatestReviews": {
+        "title": "Opinions recents de famílies",
+        "verified": "Verificada",
+        "viewAll": "Veure totes les opinions"
     }
 }

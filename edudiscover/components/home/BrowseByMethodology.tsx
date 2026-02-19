@@ -1,7 +1,9 @@
 import Link from 'next/link';
-import { METHODOLOGIES } from '@/lib/data/schools';
+import { useTranslations } from 'next-intl';
 
 export default function BrowseByMethodology() {
+    const t = useTranslations('BrowseByMethodology');
+
     const methodologies = [
         { name: 'Montessori', count: 142, emoji: '🎨' },
         { name: 'Waldorf', count: 87, emoji: '🌱' },
@@ -15,7 +17,7 @@ export default function BrowseByMethodology() {
         <section className="py-16">
             <div className="container-custom">
                 <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-                    Encuentra colegios por metodología educativa
+                    {t('title')}
                 </h2>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -29,7 +31,7 @@ export default function BrowseByMethodology() {
                             <h3 className="font-semibold text-sm mb-2 group-hover:text-primary-600 transition-colors">
                                 {methodology.name}
                             </h3>
-                            <p className="text-xs text-gray-600">{methodology.count} colegios</p>
+                            <p className="text-xs text-gray-600">{t('schoolsCount', { count: methodology.count })}</p>
                         </Link>
                     ))}
                 </div>

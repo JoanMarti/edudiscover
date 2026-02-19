@@ -1,27 +1,84 @@
 {
     "Navigation": {
-        "search": "Buscar colegios",
-        "discover": "Descubrir",
-        "compare": "Comparar",
-        "guides": "Guías",
-        "forSchools": "Para colegios",
-        "login": "Iniciar sesión",
-        "register": "Registrarse",
-        "profile": "Mi Perfil",
-        "admin": "Panel Admin",
-        "logout": "Cerrar sesión"
+        "search": "Search Schools",
+        "discover": "Discover",
+        "compare": "Compare",
+        "guides": "Guides",
+        "forSchools": "For Schools",
+        "login": "Log In",
+        "register": "Sign Up",
+        "profile": "My Profile",
+        "admin": "Admin Panel",
+        "logout": "Log Out"
     },
     "Home": {
-        "heroTitle": "Encuentra el colegio perfecto para tu hijo",
-        "heroSubtitle": "La plataforma más completa para descubrir, comparar y contactar con los mejores colegios de España.",
-        "searchPlaceholder": "Busca por nombre, ciudad o código postal...",
-        "searchButton": "Buscar colegios"
+        "heroTitle": "Find the perfect school for your child",
+        "heroSubtitle": "The most complete platform to discover, compare and contact the best schools in Spain.",
+        "searchPlaceholder": "Search by name, city or postal code...",
+        "searchButton": "Search Schools"
     },
     "Footer": {
-        "brandDescription": "Encuentra el colegio perfecto para tu hijo. Más de 12,500 colegios en España.",
-        "schools": "Colegios",
-        "resources": "Recursos",
-        "company": "Empresa",
-        "rights": "© 2026 EduDiscover. Todos los derechos reservados."
+        "brandDescription": "Find the perfect school for your child. Over 12,500 schools in Spain.",
+        "schools": "Schools",
+        "resources": "Resources",
+        "company": "Company",
+        "rights": "© 2026 EduDiscover. All rights reserved."
+    },
+    "SchoolTypes": {
+        "privado": "Private",
+        "publico": "Public",
+        "concertado": "Charter",
+        "internacional": "International"
+    },
+    "Stages": {
+        "infantil": "Infant",
+        "primaria": "Primary",
+        "secundaria": "Secondary",
+        "bachillerato": "Baccalaureate"
+    },
+    "Common": {
+        "bilingual": "Bilingual",
+        "reviews": "reviews",
+        "viewProfile": "View profile",
+        "featuredSchools": "Featured Schools",
+        "featuredSchoolsSubtitle": "Schools with excellent ratings",
+        "location": "Location",
+        "school": "School",
+        "search": "Search",
+        "anyCity": "Any city",
+        "bestRated": "Top rated",
+        "favorites": "Favorites"
+    },
+    "BrowseByType": {
+        "title": "Browse schools by type",
+        "publico": {
+            "name": "Public Schools",
+            "description": "Free and quality education",
+            "count": "2,450 schools"
+        },
+        "concertado": {
+            "name": "Charter Schools",
+            "description": "Private management, public funding",
+            "count": "1,820 schools"
+        },
+        "privado": {
+            "name": "Private Schools",
+            "description": "Pedagogical and methodological autonomy",
+            "count": "1,180 schools"
+        },
+        "internacional": {
+            "name": "International Schools",
+            "description": "International and multilingual curriculum",
+            "count": "385 schools"
+        }
+    },
+    "BrowseByMethodology": {
+        "title": "Find schools by educational methodology",
+        "schoolsCount": "{count} schools"
+    },
+    "LatestReviews": {
+        "title": "Recent reviews from families",
+        "verified": "Verified",
+        "viewAll": "View all reviews"
     }
 }

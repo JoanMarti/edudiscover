@@ -1,37 +1,40 @@
 import Link from 'next/link';
 import { Building2, GraduationCap, Globe, School } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export default function BrowseByType() {
+    const t = useTranslations('BrowseByType');
+
     const types = [
         {
             id: 'publico',
-            name: 'Colegios Públicos',
-            description: 'Educación gratuita y de calidad',
-            count: '2,450 colegios',
+            name: t('publico.name'),
+            description: t('publico.description'),
+            count: t('publico.count'),
             icon: School,
             color: 'bg-blue-100 text-blue-600',
         },
         {
             id: 'concertado',
-            name: 'Colegios Concertados',
-            description: 'Gestión privada, financiación pública',
-            count: '1,820 colegios',
+            name: t('concertado.name'),
+            description: t('concertado.description'),
+            count: t('concertado.count'),
             icon: Building2,
             color: 'bg-green-100 text-green-600',
         },
         {
             id: 'privado',
-            name: 'Colegios Privados',
-            description: 'Autonomía pedagógica y metodológica',
-            count: '1,180 colegios',
+            name: t('privado.name'),
+            description: t('privado.description'),
+            count: t('privado.count'),
             icon: GraduationCap,
             color: 'bg-purple-100 text-purple-600',
         },
         {
             id: 'internacional',
-            name: 'Colegios Internacionales',
-            description: 'Currículum internacional y multilingüe',
-            count: '385 colegios',
+            name: t('internacional.name'),
+            description: t('internacional.description'),
+            count: t('internacional.count'),
             icon: Globe,
             color: 'bg-orange-100 text-orange-600',
         },
@@ -41,7 +44,7 @@ export default function BrowseByType() {
         <section className="py-16 bg-gray-50">
             <div className="container-custom">
                 <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-                    Explora colegios por tipo
+                    {t('title')}
                 </h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

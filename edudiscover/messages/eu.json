@@ -23,5 +23,62 @@
         "resources": "Recursos",
         "company": "Empresa",
         "rights": "© 2026 EduDiscover. Todos los derechos reservados."
+    },
+    "SchoolTypes": {
+        "privado": "Privado",
+        "publico": "Público",
+        "concertado": "Concertado",
+        "internacional": "Internacional"
+    },
+    "Stages": {
+        "infantil": "Infantil",
+        "primaria": "Primaria",
+        "secundaria": "Secundaria",
+        "bachillerato": "Bachillerato"
+    },
+    "Common": {
+        "bilingual": "Bilingüe",
+        "reviews": "opiniones",
+        "viewProfile": "Ver perfil",
+        "featuredSchools": "Colegios destacados",
+        "featuredSchoolsSubtitle": "Colegios con excelentes valoraciones",
+        "location": "Ubicación",
+        "school": "Colegio",
+        "search": "Buscar",
+        "anyCity": "Cualquier ciudad",
+        "bestRated": "Mejores valorados",
+        "favorites": "Favoritos"
+    },
+    "BrowseByType": {
+        "title": "Explora colegios por tipo",
+        "publico": {
+            "name": "Colegios Públicos",
+            "description": "Educación gratuita y de calidad",
+            "count": "2,450 colegios"
+        },
+        "concertado": {
+            "name": "Colegios Concertados",
+            "description": "Gestión privada, financiación pública",
+            "count": "1,820 colegios"
+        },
+        "privado": {
+            "name": "Colegios Privados",
+            "description": "Autonomía pedagógica y metodológica",
+            "count": "1,180 colegios"
+        },
+        "internacional": {
+            "name": "Colegios Internacionales",
+            "description": "Currículum internacional y multilingüe",
+            "count": "385 colegios"
+        }
+    },
+    "BrowseByMethodology": {
+        "title": "Encuentra colegios por metodología educativa",
+        "schoolsCount": "{count} colegios"
+    },
+    "LatestReviews": {
+        "title": "Opiniones recientes de familias",
+        "verified": "Verificada",
+        "viewAll": "Ver todas las opiniones"
     }
 }
