@@ -1,178 +1,168 @@
 # EduDiscover 🏫
 
-> Plataforma para descubrir, comparar y contactar con colegios en España.
+> Platform for discovering, comparing, and contacting schools in Spain.
 
-EduDiscover ayuda a las familias a encontrar el colegio perfecto para sus hijos. Con más de 12.500 centros educativos, filtros avanzados, comparador, guías para padres y un completo directorio de ayudas y becas educativas.
+EduDiscover helps families find the perfect school for their children. It features over 12,500 educational centers, advanced filters, a comparison tool, parent guides, and a complete directory of educational scholarships and grants.
 
 ---
 
-## ✨ Funcionalidades principales
+## ✨ Key Features
 
-| Área | Descripción |
+| Area | Description |
 |---|---|
-| 🔍 **Búsqueda avanzada** | Filtra por ciudad, tipo de centro, metodología, etapa educativa, precio y más |
-| 🏫 **Fichas de colegio** | Información completa: instalaciones, metodología, precios, opiniones y ranking |
-| ⚖️ **Comparador** | Compara hasta 3 colegios lado a lado con highlights de mejor valor |
-| 🧭 **Descubrir** | Explora por tipo, etapa, ciudad, metodología y colecciones curadas |
-| 📚 **Guías para padres** | Artículos y recursos para tomar la mejor decisión educativa |
-| 💶 **Ayudas y Becas** | Guía completa: becas MEC, 17 CCAA, calendario de solicitudes y FAQ |
-| 👤 **Perfil de usuario** | Gestión de hijos, preferencias, presupuesto y becas activas |
-| 🍪 **GDPR** | Banner de cookies y modal de preferencias compliant |
-| 🏢 **Para colegios** | Landing B2B para directores con planes de visibilidad |
+| 🔍 **Advanced Search** | Filter by city, school type, methodology, educational stage, price, and more |
+| 🌐 **Internationalization** | Fully localized in **English, Spanish, Catalan, Galician, and Basque** |
+| 🏫 **School Profiles** | Complete information: facilities, methodology, prices, reviews, and rankings |
+| ⚖️ **Comparison Tool** | Compare up to 3 schools side-by-side with value highlights |
+| 🧭 **Discover** | Explore by type, stage, city, methodology, and curated collections |
+| 📚 **Parent Guides** | Articles and resources to make the best educational decisions |
+| 💶 **Scholarships & Grants** | Complete guide: MEC scholarships, 17 autonomous communities, deadlines, and FAQ |
+| 👤 **User Profile** | Manage children, preferences, budget, and active scholarships |
+| 🍪 **GDPR** | Compliant cookie banner and preference modal |
+| 🏢 **For Schools** | B2B landing page for school directors with visibility plans |
 
 ---
 
-## 🛠️ Stack tecnológico
+## 🛠️ Tech Stack
 
 - **Framework:** [Next.js 14](https://nextjs.org/) (App Router)
-- **Lenguaje:** TypeScript
-- **Estilos:** Tailwind CSS
-- **Iconos:** [Lucide React](https://lucide.dev/)
-- **Fuentes:** Inter (Google Fonts)
-- **Estado:** React Context + localStorage
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Internationalization:** [next-intl](https://next-intl-docs.vercel.app/)
+- **Icons:** [Lucide React](https://lucide.dev/)
+- **Fonts:** Inter (Google Fonts)
+- **State:** React Context + localStorage
 - **HTTP:** Axios (scraper)
 
 ---
 
-## 📁 Estructura del proyecto
+## 📁 Project Structure
 
 ```
 edudiscover/
 ├── app/
-│   ├── (auth)/              # Login y registro
-│   ├── (dashboard)/         # Perfil de usuario
-│   ├── (marketing)/         # Páginas públicas
-│   │   ├── buscar/          # Buscador con filtros
-│   │   ├── comparar/        # Comparador de colegios
-│   │   ├── descubrir/       # Exploración por categorías
-│   │   └── guias/           # Hub de guías + /ayudas
-│   ├── [slug]/              # Ficha dinámica de colegio
-│   ├── para-colegios/       # Landing B2B
-│   ├── not-found.tsx        # Página 404 personalizada
-│   └── layout.tsx           # Layout raíz con GDPR
+│   ├── [locale]/            # Internationalized routes
+│   │   ├── (auth)/          # Login and registration
+│   │   ├── (dashboard)/     # User profile
+│   │   ├── (marketing)/     # Public pages (Search, Compare, Discover)
+│   │   ├── [slug]/          # Dynamic school profile
+│   │   └── ...
+│   ├── api/                 # API routes
+│   └── not-found.tsx        # Custom 404 page
 ├── components/
-│   ├── auth/                # Componentes de autenticación
-│   ├── discover/            # Secciones de Descubrir
-│   ├── gdpr/                # Banner y modal de cookies
-│   ├── home/                # Secciones de la homepage
+│   ├── auth/                # Authentication components
+│   ├── discover/            # Discover sections
+│   ├── home/                # Homepage sections
 │   ├── layout/              # Header, Footer, LanguageSelector
-│   ├── profile/             # Tabs del perfil de usuario
-│   ├── school/              # Acciones (guardar, comparar)
-│   ├── schools/             # Cards, rankings, timeline
-│   └── search/              # Filtros de búsqueda
+│   ├── school/              # Actions (save, compare)
+│   └── search/              # Search filters
 ├── lib/
-│   ├── constants/           # Categorías de cookies
-│   ├── contexts/            # AuthContext
-│   ├── data/                # Datos mock (colegios, ciudades, ayudas, rankings)
-│   ├── hooks/               # useCookieConsent, useLocalStorage
-│   ├── services/            # rankingService
-│   ├── types/               # Tipos TypeScript
-│   └── utils.ts             # Utilidades (formatRating, formatPrice)
-├── public/
-│   └── flags/               # Banderas autonómicas
-└── scripts/                 # Scraper de datos de colegios
+│   ├── contexts/            # AuthContext, CountryContext
+│   ├── data/                # Mock data (schools, cities, scholarships)
+│   └── utils.ts             # Utilities
+├── messages/                # Translation files (en.json, es.json, etc.)
+├── public/                  # Static assets
+└── scripts/                 # Data scrapers and integration scripts
 ```
 
 ---
 
-## 🚀 Cómo ejecutar en local
+## 🚀 How to Run Locally
 
-### Requisitos previos
+### Prerequisites
 - Node.js 18+
-- npm o yarn
+- npm or yarn
 
-### Instalación
+### Installation
 
 ```bash
-# Clonar el repositorio
+# Clone the repository
 git clone https://github.com/JoanMarti/edudiscover.git
-cd edudiscover/edudiscover
+cd edudiscover
 
-# Instalar dependencias
+# Install dependencies
 npm install
 
-# Iniciar el servidor de desarrollo
+# Start development server
 npm run dev
 ```
 
-La aplicación estará disponible en [http://localhost:3000](http://localhost:3000).
+The application will be available at [http://localhost:3000](http://localhost:3000).
 
-### Scripts disponibles
+### Available Scripts
 
 ```bash
-npm run dev      # Servidor de desarrollo con hot-reload
-npm run build    # Build de producción
-npm run start    # Servidor de producción
-npm run lint     # Linter ESLint
+npm run dev             # Development server with hot-reload
+npm run build           # Production build
+npm run start           # Start production server
+npm run lint            # Linting with ESLint
+npm run scrape          # Run school data scraper
+npm run verify:data     # Verify data integrity
 ```
 
 ---
 
-## 📄 Páginas disponibles
+## 📄 Available Pages
 
-| Ruta | Descripción |
+| Route | Description |
 |---|---|
-| `/` | Homepage con búsqueda, tipos y colegios destacados |
-| `/buscar` | Buscador avanzado con filtros |
-| `/[slug]` | Ficha de colegio (ej: `/colegio-montessori-barcelona`) |
-| `/comparar` | Comparador de hasta 3 colegios |
-| `/descubrir` | Exploración por tipo, etapa, ciudad y metodología |
-| `/guias` | Hub de guías para padres |
-| `/guias/ayudas` | Guía completa de ayudas y becas educativas |
-| `/iniciar-sesion` | Login de usuario |
-| `/registrarse` | Registro de usuario |
-| `/perfil` | Perfil con 4 tabs (personal, familia, preferencias, financiero) |
-| `/para-colegios` | Landing B2B para directores de colegios |
-| `/contacto` | Formulario de contacto |
-| `/sobre-nosotros` | Página corporativa |
-| `/privacidad` | Política de privacidad |
-| `/terminos` | Términos y condiciones |
+| `/` | Homepage with search, types, and featured schools |
+| `/buscar` | Advanced search with filters |
+| `/[slug]` | School profile (e.g., `/colegio-montessori-barcelona`) |
+| `/comparar` | School comparison tool |
+| `/descubrir` | Exploration by type, stage, city, and methodology |
+| `/guias` | Parent guides hub |
+| `/guias/ayudas` | Complete guide to educational scholarships |
+| `/iniciar-sesion` | User login |
+| `/registrarse` | User registration |
+| `/perfil` | Profile with 4 tabs (personal, family, preferences, financial) |
+| `/para-colegios` | B2B landing page |
 
 ---
 
-## 🗺️ Datos de colegios
+## 🗺️ School Data
 
-El proyecto incluye datos mock en `lib/data/schools.ts` y un sistema de scraping en `scripts/` para obtener datos reales de colegios de fuentes públicas.
+The project includes mock data in `lib/data/schools.ts` and a scraping system in `scripts/` to obtain real school data from public sources.
 
-Para ejecutar el scraper:
+To run the scraper:
 
 ```bash
-npx ts-node scripts/scraper.ts
+npx tsx scripts/scraper.ts
 ```
 
 ---
 
-## 🔒 Autenticación
+## 🔒 Authentication
 
-La autenticación es simulada con `localStorage` (sin backend real). Las credenciales de demo son:
+Authentication is simulated using `localStorage` (no real backend). Demo credentials are:
 
 - **Email:** `test@edudiscover.es`
-- **Contraseña:** `password123`
+- **Password:** `password123`
 
 ---
 
 ## 🍪 GDPR
 
-El sistema de cookies incluye:
-- **Esenciales** — siempre activas
-- **Analíticas** — Google Analytics (simulado)
-- **Publicidad** — anuncios personalizados (simulado)
-- **Redes sociales** — widgets sociales (simulado)
+The cookie system includes:
+- **Essential** — always active
+- **Analytics** — Google Analytics (simulated)
+- **Marketing** — Personalized ads (simulated)
+- **Social** — Social widgets (simulated)
 
-Las preferencias se guardan en `localStorage` bajo la clave `edudiscover_cookie_consent`.
-
----
-
-## 🤝 Contribuir
-
-1. Haz fork del repositorio
-2. Crea una rama: `git checkout -b feature/nueva-funcionalidad`
-3. Haz commit de tus cambios: `git commit -m 'feat: añadir nueva funcionalidad'`
-4. Push a la rama: `git push origin feature/nueva-funcionalidad`
-5. Abre un Pull Request
+Preferences are saved in `localStorage` under the key `edudiscover_cookie_consent`.
 
 ---
 
-## 📝 Licencia
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a branch: `git checkout -b feature/new-feature`
+3. Commit your changes: `git commit -m 'feat: add new feature'`
+4. Push to the branch: `git push origin feature/new-feature`
+5. Open a Pull Request
+
+---
+
+## 📝 License
 
 MIT © [Joan Martí](https://github.com/JoanMarti)
